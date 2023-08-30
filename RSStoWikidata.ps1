@@ -1,5 +1,5 @@
 #Get  URL
-$Q = "Q110568256","Q68131854","Q110568719","Q110568737","Q110573808","Q110573857","Q110573969","Q110573979","Q110573992","Q110573998"
+$Q = "Q110568256","Q110555760","Q110555892","Q110555967","Q110555971","Q110568022","Q110568242","Q110568415","Q110568422","Q110568439","Q110568469","Q110568531","Q110568580","Q110568630","Q110568634","Q110568650","Q110568719","Q110568737","Q110568752","Q110568759","Q110568766","Q110568782","Q110568811","Q110568827","Q110568844","Q110568866","Q110568865","Q110568868","Q110568875","Q110568878","Q110568895","Q110568908","Q110568909","Q110568930","Q110568939","Q110568937","Q110568946","Q110568958","Q110568960","Q110568972","Q110573469","Q110573483","Q110573486","Q110573495","Q110573492","Q110573498","Q110573503","Q110573514","Q110573519","Q110573531","Q110573529","Q110573541","Q110573546","Q110573545","Q110573555","Q110573553","Q110573557","Q110573564","Q110573565","Q110573568","Q110573586","Q110573587","Q110573592","Q110573598","Q110573596","Q110573602","Q110573607","Q110573610","Q110573619","Q110573630","Q110573632","Q110573640","Q110573647","Q110573670","Q110573669","Q110573693","Q110573713","Q110573718","Q110573722","Q110573727","Q110573756","Q110573775","Q110573777","Q110573790","Q110573807","Q110573804","Q110573808","Q110573852","Q110573857","Q110573886","Q110573885","Q110573889","Q110573923","Q110573971","Q110573992","Q110574005","Q110574015","Q110574012","Q110574018","Q110574019"
 #to do
 # get the podcast logo URL and put it in P10286
 # take <itunes:category text="Education"> and set it as genre
@@ -29,6 +29,8 @@ function Send-Wikidata {
         'es-mx' = 'Q616620'
         'es_mx' = 'Q616620'
         'es-ES'= 'Q1321'
+        'tr' = 'Q256'
+        'it' = 'Q652'
     }
 
     #Retrieve the wikidata item and put in a variable called WD then show me what you got
@@ -52,8 +54,6 @@ function Send-Wikidata {
         $Response = Invoke-WebRequest -Uri "$URL" -UseBasicParsing -ContentType "application/xml"
 
         $FeedXml = [xml]$Response.Content
-        #$Entries = @()
-        #$Now = Get-Date
 
         # Exract recent entries (currently set for updated within the last 24 hours)
         ForEach ($Entry in $FeedXml.feed.entry) {
@@ -102,15 +102,7 @@ function Send-Wikidata {
         if ($lang.length -eq 0) {$lang = $chfeed.rss.channel.language}
         #Write-Output "Its raw language is $lang"
         $lang = $language[$lang.ToLower()]
-        #$opensquare = $lang.IndexOf("[CDATA[")
-        #$closesquare = $lang.IndexOf("]")
-        #if ($opensquare -ne 0) {
-        #    $opensquare += 7
-        #    #$len=$lang.length
-        #    $numtotake = $closesquare - $opensquare
-        #    $lang = $lang.substring($opensquare, $numtotake)
-        #}
-        $out += "%7C%7C$QID%7CP407%7C$($lang)"
+                $out += "%7C%7C$QID%7CP407%7C$($lang)"
         }
         #$chfeed.rss.channel.language
         #Start-Process "chrome.exe" "$output"
